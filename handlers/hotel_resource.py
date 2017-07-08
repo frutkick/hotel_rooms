@@ -23,7 +23,7 @@ class HotelsHandler(web.RequestHandler):
     def post(self):
         args = json_decode(self.request.body)
         try:
-            hotel_name = args['hotel_name']
+            hotel_name = args['name']
         except KeyError:
             raise web.HTTPError(400)
         new_hotel = yield HotelManager(self.application.db).create(hotel_name)
@@ -44,7 +44,10 @@ class HotelHandler(web.RequestHandler):
     @gen.coroutine
     def put(self, hotel_id):
         args = json_decode(self.request.body)
-        new_name = args['hotel_name']
+        try:
+            new_name = args['name']
+        except KeyError:
+            raise web.HTTPError(400)
         hotel = yield HotelManager(self.application.db).update(new_name, hotel_id)
         try:
             result = json_encode(dict(zip(KEYS, hotel)))
