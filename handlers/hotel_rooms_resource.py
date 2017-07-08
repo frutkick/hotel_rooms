@@ -8,7 +8,7 @@ from tornado.escape import (
 from entities_managers import RoomManager
 
 
-KEYS = ['id', 'room_number', 'hotel_id', 'floor_number']
+KEYS = ['id', 'room_number', 'hotel_id', 'floor_number', 'guest_name']
 
 
 class HotelRoomsHandler(web.RequestHandler):
