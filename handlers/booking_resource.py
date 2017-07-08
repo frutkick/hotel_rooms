@@ -1,17 +1,47 @@
 from tornado import web
+from tornado import gen
+from tornado.escape import (
+    json_decode,
+    json_encode
+)
+
+from entities import BookingManager
 
 
-class BookingCreateResource(web.RequestHandler):
-
-    def post(self, room_number):
-        print self.get_body_arguments('guest_name')
-        self.write('Book room.')
+KEYS = ['room_id', 'guest_name']
 
 
-class BookingUpdateResource(web.RequestHandler):
+class BookingResource(web.RequestHandler):
 
-    def put(self, room_number, booking_id):
-        self.write('Update booking')
+    @gen.coroutine
+    def post(self, hotel_id, room_id):
+        args = json_decode(self.request.body)
+        try:
+            guest_name = args['guest_name']
+        except KeyError:
+            raise web.HTTPError(400)
+        new_booking = yield BookingManager(self.application.db).create(room_id, guest_name)
+        self.write(json_encode(dict(zip(KEYS, new_booking))))
 
-    def delete(self, room_number, booking_id):
-        self.write('Cancel booking')
+    @gen.coroutine
+    def put(self, hotel_id, room_id):
+        args = json_decode(self.request.body)
+        try:
+            guest_name = args['guest_name']
+        except KeyError:
+            raise web.HTTPError(400)
+        booking = yield BookingManager(self.application.db).update(guest_name, room_id)
+        try:
+            result = json_encode(dict(zip(KEYS, booking)))
+            self.write(result)
+        except TypeError:
+            raise web.HTTPError(404)
+
+    @gen.coroutine
+    def delete(self, hotel_id, room_id):
+        booking = yield BookingManager(self.application.db).delete(room_id)
+        try:
+            result = json_encode(dict(zip(KEYS, booking)))
+            self.write(result)
+        except TypeError:
+            raise web.HTTPError(404)

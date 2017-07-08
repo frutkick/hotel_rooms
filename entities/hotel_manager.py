@@ -2,6 +2,7 @@ from entities.base_manager import BaseManager
 
 
 class HotelManager(BaseManager):
+
     queries_map = {
         'get_all': """SELECT * FROM hotels;""",
         'create': """INSERT INTO hotels (name) VALUES (%s) RETURNING *;""",

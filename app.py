@@ -12,10 +12,7 @@ from handlers.hotel_rooms_resource import (
     HotelRoomsHandler
 )
 
-from handlers.booking_resource import (
-    BookingCreateResource,
-    BookingUpdateResource
-)
+from handlers.booking_resource import BookingResource
 from tornado import (
     ioloop,
     web,
@@ -29,8 +26,7 @@ def get_handlers():
         (r'/hotels/([0-9]+)/?', HotelHandler),
         (r'/hotels/([0-9]+)/rooms/?', HotelRoomsHandler),
         (r'/hotels/([0-9]+)/rooms/([0-9]+)/?', HotelRoomHandler),
-        (r'/hotels/([0-9]+)/rooms/([0-9]+)/book/?', BookingCreateResource),
-        (r'/hotels/([0-9]+)/rooms/([0-9]+)/book/([0-9]+)/?', BookingUpdateResource)
+        (r'/hotels/([0-9]+)/rooms/([0-9]+)/book/?', BookingResource)
     ]
     return handlers
 
