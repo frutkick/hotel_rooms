@@ -5,7 +5,7 @@ from tornado.escape import (
     json_encode
 )
 
-from entities import RoomManager
+from entities_managers import RoomManager
 
 
 KEYS = ['id', 'room_number', 'hotel_id', 'floor_number']

@@ -1,0 +1,3 @@
+from entities_managers.hotel_manager import HotelManager
+from entities_managers.room_manager import RoomManager
+from entities_managers.booking_manager import BookingManager

@@ -1,4 +1,4 @@
-from entities.base_manager import BaseManager
+from entities_managers.base_manager import BaseManager
 
 
 class RoomManager(BaseManager):
