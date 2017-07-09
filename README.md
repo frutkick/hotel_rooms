@@ -13,6 +13,11 @@ To setup environment please use next command::
     make setup
 
 
+To setup database please use next command::
+
+    python init_db.py --dbhost=<DB host> --dbport=<DB port> --dbuser=<DB user> --dbpass=<DB user pass> --dbname=<DB name>
+
+
 Testing
 -------
 
